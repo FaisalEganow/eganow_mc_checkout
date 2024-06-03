@@ -21,7 +21,7 @@ export default function Home({ params }) {
   const [loader, setLoader] = useState(false);
 
   //NOTE - useform
-  const { register, handleSubmit, reset, watch, formState, setValue } = useForm(
+  const { register, handleSubmit, reset, watch, formState, setValue,getValues } = useForm(
     {
       mode: "onChange",
       resolver: yupResolver(validationSchema),
@@ -40,10 +40,10 @@ export default function Home({ params }) {
     try {
       const getData = await axios.get(`api/credentials/${p_key}`);
       // console.log(p_key);
-      console.log(getData.data);
       if (getData.data.customer_id) {
         setLoader(false);
         setToken(getData.data.token);
+        setValue('amount',getData.data.amount)
         localStorage.setItem("customer_id", getData.data.customer_id);
         localStorage.setItem("amount", getData.data.amount);
         localStorage.setItem("ip_address", getData.data.ip_address);
@@ -58,13 +58,18 @@ export default function Home({ params }) {
     }
   };
 
+  
+  useEffect(() => {}, []);
+
+  useEffect(() => {
+    getTokenData();
+  }, [token]);
+
   const onSubmit = async (values) => {
-    const transactionId = nanoid(); //GENERATE TRANSACTION ID
     console.log(values);
     const data = {
-      narration: `${values.name} pays GHS${localStorage.getItem("amount")}`,
-      transactionId,
-      amount: localStorage.getItem("amount"),
+      // narration: `${values.name} pays GHS${localStorage.getItem("amount")}`,
+      amount: getValues('amount'),
       customer_id: localStorage.getItem("customer_id"),
       p_key: sessionStorage.getItem("p_key"),
       ...values,
@@ -72,18 +77,14 @@ export default function Home({ params }) {
     console.log(data);
     try {
       const response = await axios.post("/api/makecollection/", data);
-      console.log(response.data);
-      // localStorage.setItem("transactionId", transactionId);
+      console.log(response);
       if (
-        response.data.data.Status &&
-        response.data.data.TransStatus == "PENDING"
+        response?.data.data
       ) {
+        localStorage.setItem("3ds", response.data.data.threeds_html);
         router.push("/processing");
-        localStorage.setItem("3ds", response.data.data.Extra);
       }
-      if (!response.data.data.Status) {
-        toast.error(response.data.data.Message);
-      }
+     
     } catch (error) {
       console.error(error);
       toast.error("Error");
@@ -91,11 +92,6 @@ export default function Home({ params }) {
   };
 
 
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    getTokenData();
-  }, [token]);
 
   return (
     <div>

@@ -14,44 +14,44 @@ function Page() {
   const statusRef = useRef(transactionStatus);
 
   // FUNCTION TO CHECK TRANSACTION STATUS
-  const getStats = async () => {
-    const data = {
-      token: token,
-      transactionId: savedTransactionId,
-      xAuth: localStorage.getItem("xauth")
-    };
+  // const getStats = async () => {
+  //   const data = {
+  //     token: token,
+  //     transactionId: savedTransactionId,
+  //     xAuth: localStorage.getItem("xauth")
+  //   };
 
-    // console.log(data);
-    try {
-      const response = await axios.post("/api/transactionstatus/", data);
-      return response.data.data.TransStatus;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  };
+  //   // console.log(data);
+  //   try {
+  //     const response = await axios.post("/api/transactionstatus/", data);
+  //     return response.data.data.TransStatus;
+  //   } catch (error) {
+  //     console.error(error);
+  //     return false;
+  //   }
+  // };
 
   // console.log(transactionStatus);
 
-  useEffect(() => {
-    statusRef.current = transactionStatus;
-    setSavedTransactionId(localStorage.getItem("transactionId"));
-    setToken(localStorage.getItem("token"));
-  }, [transactionStatus]);
+  // useEffect(() => {
+  //   statusRef.current = transactionStatus;
+  //   setSavedTransactionId(localStorage.getItem("transactionId"));
+  //   setToken(localStorage.getItem("token"));
+  // }, [transactionStatus]);
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const status = await getStats();
-      setTransactionStatus(status);
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     const status = await getStats();
+  //     setTransactionStatus(status);
 
-      if (status === "SUCCESSFUL" || status === "FAILED") {
-        clearInterval(interval);
-      }
-    }, 5000); // Check every 5 seconds
+  //     if (status === "SUCCESSFUL" || status === "FAILED") {
+  //       clearInterval(interval);
+  //     }
+  //   }, 5000); // Check every 5 seconds
 
-    // Clean up interval on component unmount
-    return () => clearInterval(interval);
-  }, [savedTransactionId, token]);
+  //   // Clean up interval on component unmount
+  //   return () => clearInterval(interval);
+  // }, [savedTransactionId, token]);
 
   const renderStatusComponent = () => {
     switch (transactionStatus) {

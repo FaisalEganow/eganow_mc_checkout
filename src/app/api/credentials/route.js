@@ -13,24 +13,9 @@ export const dynamic = "force-dynamic"; // defaults to auto
 export async function POST(request) {
 
   const data = await request.json();
-  // const { username, password, x_auth, amount, callback_url } =
-  //   await request.json();
+  console.log(data);
+
   try {
-    // const data = await axios.get(`${BASE_URL}/accesstoken`, {
-    //   headers: {
-    //     Authorization: "Basic " + btoa(username + ":" + password),
-    //     "Content-Type": "application/json", // Adjust content type as needed
-    //   },
-    // });
-
-    // const values = {
-    //   token: data.data.Token,
-    //   x_auth,
-    //   amount,
-    //   callback_url,
-    // };
-
-    // if (data.data) {
       const response = await axios.post(`${URL}/store`, data , {
         headers: {
           Authorization:
@@ -44,7 +29,6 @@ export async function POST(request) {
         },
       });
       return NextResponse.json(response.data, { status: 200 });
-    // }
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch access token" },

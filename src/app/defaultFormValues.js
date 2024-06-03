@@ -4,5 +4,6 @@ export const defaultFormValues = {
   expiryMonth: "",
   expiryYear: "",
   cvv: "",
-  serviceId: "",
+  // serviceId: "",
+  amount : 0
 };

@@ -5,21 +5,19 @@ function Pending() {
   const [loader, setLoader] = useState(true);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [amount, setAmount] = useState("");
-  // const paymentUrl = localStorage.getItem('3ds');
-  // const paymentUrl = '';
-  //
+
   const redirectContainerRef = React.useRef(); //frame contaner
-  // useEffect(() => {
 
-    
-  // },[paymentUrl])
+  function removeBackslashes(inputString) {
+    return inputString.replace(/\\/g, '');
+}
 
-  // console.log(localStorage.getItem("3ds"));
   
   React.useEffect(() => {
     setAmount(localStorage.getItem("amount"));
-    setPaymentUrl(localStorage.getItem("3ds"));
+    setPaymentUrl(localStorage.getItem("3ds").replace(/\\/g, ''));
     if (redirectContainerRef.current) {
+      console.log(paymentUrl);
       // Set the HTML content
       redirectContainerRef.current.innerHTML = paymentUrl;
 
@@ -33,7 +31,7 @@ function Pending() {
         document.body.appendChild(newScript);
 
         const divEl = redirectContainerRef.current.querySelector(
-          "#threedsChallengeRedirect"
+          "#initiate3dsSimpleRedirect"
         );
         // console.log(divEl);
         if (divEl) {
@@ -43,7 +41,7 @@ function Pending() {
         // const spinner = document.querySelector("#spinner"); //target spinner
 
         const iFrame =
-          redirectContainerRef.current.querySelector("#challengeFrame"); //iframe container
+          redirectContainerRef.current.querySelector("#methodFrame"); //iframe container
         if (iFrame) {
           //   spinner.style.display = "block";
           //   redirectContainerRef.current.style.display = "none";
@@ -54,6 +52,8 @@ function Pending() {
             // spinner.style.display = "none";
 
             // Show iframe
+            redirectContainerRef.current.style.width = "100%";
+            redirectContainerRef.current.style.height = "100%";
             redirectContainerRef.current.style.display = "block";
           });
         }
