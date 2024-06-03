@@ -40,13 +40,13 @@ export default function Home({ params }) {
     try {
       const getData = await axios.get(`api/credentials/${p_key}`);
       // console.log(p_key);
-      // console.log(getData.data);
-      if (getData.data.token) {
+      console.log(getData.data);
+      if (getData.data.customer_id) {
         setLoader(false);
         setToken(getData.data.token);
-        localStorage.setItem("token", getData.data.token);
+        localStorage.setItem("customer_id", getData.data.customer_id);
         localStorage.setItem("amount", getData.data.amount);
-        localStorage.setItem("xauth", getData.data.x_auth);
+        localStorage.setItem("ip_address", getData.data.ip_address);
         localStorage.setItem("callBack_url", getData.data.callback_url);
       }
     } catch (error) {
@@ -60,18 +60,20 @@ export default function Home({ params }) {
 
   const onSubmit = async (values) => {
     const transactionId = nanoid(); //GENERATE TRANSACTION ID
+    console.log(values);
     const data = {
       narration: `${values.name} pays GHS${localStorage.getItem("amount")}`,
       transactionId,
       amount: localStorage.getItem("amount"),
-      token: localStorage.getItem("token"),
-      xAuth: localStorage.getItem("xauth"),
+      customer_id: localStorage.getItem("customer_id"),
+      p_key: sessionStorage.getItem("p_key"),
       ...values,
     };
-    // console.log(data);
+    console.log(data);
     try {
       const response = await axios.post("/api/makecollection/", data);
-      localStorage.setItem("transactionId", transactionId);
+      console.log(response.data);
+      // localStorage.setItem("transactionId", transactionId);
       if (
         response.data.data.Status &&
         response.data.data.TransStatus == "PENDING"
@@ -88,31 +90,11 @@ export default function Home({ params }) {
     }
   };
 
-  const getPaymethods = async () => {
-    const body = {
-      token: localStorage.getItem("token"),
-      xAuth: localStorage.getItem("xauth"),
-    };
-    try {
-      const response = await axios.post(`/api/paymentmethods/`, body);
-      // console.log(response.data.data);
-      if (response?.data?.data?.Status) {
-        const serviceId =
-          response?.data?.data?.PaymentTypesAndSvcList[3]?.PayPartnerServiceId;
-        setValue("serviceId", serviceId || "PAYMENTCARDGATEWAY");
-      } else {
-        setValue("serviceId", "PAYMENTCARDGATEWAY");
-      }
-    } catch (error) {
-      console.error;
-    }
-  };
 
   useEffect(() => {}, []);
 
   useEffect(() => {
     getTokenData();
-    getPaymethods();
   }, [token]);
 
   return (

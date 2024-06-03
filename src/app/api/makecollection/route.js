@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, MERCHANT_AUTH } from "../../constants";
+import { BASE_URL, MERCHANT_AUTH, URL } from "../../constants";
 import { NextResponse } from "next/server";
 import { response } from "../credentials/route";
 
@@ -15,26 +15,27 @@ export async function POST(request) {
   // console.log(data);
   try {
     const response = await axios.post(
-      `${BASE_URL}/transfer/debitaccount`,
+      `${URL}/pay`,
       {
-        PayPartnerServiceId: data?.serviceId,
-        Amount: data?.amount,
-        AccountNoOrCardNoOrMSISDN: data.accountNoOrCardNoOrMSISDN,
-        AccountName: data?.accountName || data.name,
-        // AccountName: data.name,
-        TransactionId: data?.transactionId,
-        Narration: data?.narration,
-        TransCurrencyIso: "GHS",
-        ExpiryDateMonth: data?.expiryMonth || 0,
-        ExpiryDateYear: data?.expiryYear || 0,
-        Cvv: data?.cvv || 0,
-        LanguageId: "En",
+        customer_id: data?.customer_id,
+        amount: data?.amount,
+        public_key: data?.p_key,
+        card_holder_name: data?.accountName || data.name,
+        card_number: data.accountNoOrCardNoOrMSISDN, 
+        card_expiry_month: data?.expiryMonth || 0,
+        card_expiry_year: data?.expiryYear || 0,
+        card_cvv: data?.cvv || 0,
       },
       {
         headers: {
-          Authorization: `Bearer ${data?.token}`,
+          Authorization:
+            "Basic " +
+            btoa(
+              process.env.EGAPAY_CHECKOUT_USERNAME +
+                ":" +
+                process.env.EGAPAY_CHECKOUT_PASSWORD
+            ),
           "Content-Type": "application/json",
-          "X-Auth": data.xAuth,
         },
       }
     );
