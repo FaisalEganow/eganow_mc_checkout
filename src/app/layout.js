@@ -112,7 +112,7 @@ export default function RootLayout({ children }) {
                       <p className="">
                         Pay{" "}
                         <span className="text-blue-500 font-medium">
-                          GHS {amount}
+                          GHS {new Intl.NumberFormat().format(amount)}
                         </span>
                       </p>
                     )}
