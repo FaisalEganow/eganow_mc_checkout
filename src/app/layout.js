@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
     try {
       const getData = await axios.get(`api/credentials/${p_key}`);
       // console.log(p_key);
-      // console.log(getData.data);
+      console.log(getData.data);
       setLoader(false);
       if (getData.data.customer_id) {
         setAmount(getData.data.amount);
