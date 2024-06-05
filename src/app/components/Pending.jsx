@@ -24,6 +24,8 @@ function Pending() {
       // Execute the script
       const scriptElement =
         redirectContainerRef.current.querySelector("script");
+
+        console.log(scriptElement);
       if (scriptElement) {
         // Create a new script element to execute the script
         const newScript = document.createElement("script");
@@ -31,9 +33,9 @@ function Pending() {
         document.body.appendChild(newScript);
 
         const divEl = redirectContainerRef.current.querySelector(
-          "#initiate3dsSimpleRedirect"
+          "#threedsChallengeRedirect"
         );
-        // console.log(divEl);
+        console.log(divEl);
         if (divEl) {
           divEl.style.height = "100%";
         }
@@ -41,10 +43,11 @@ function Pending() {
         // const spinner = document.querySelector("#spinner"); //target spinner
 
         const iFrame =
-          redirectContainerRef.current.querySelector("#methodFrame"); //iframe container
+          redirectContainerRef.current.querySelector("#challengeFrame"); //iframe container
         if (iFrame) {
           //   spinner.style.display = "block";
           //   redirectContainerRef.current.style.display = "none";
+          iFrame.style.width = "100%";
 
           // Add event listener to detect when iframe has finished loading
           iFrame.addEventListener("load", () => {
@@ -82,10 +85,10 @@ function Pending() {
           <p className="text-xl font-semibold py-3 text-gray-700">
             Payment Initiated
           </p>
-          <small className="text-center text-gray-400 ">
+          {/* <small className="text-center text-gray-400 ">
             We've initiated your payment of GH{amount} . Kindly check your phone
             and approved the payment.
-          </small>
+          </small> */}
         </div>
       )}
       <div

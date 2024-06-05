@@ -66,17 +66,14 @@ export default function Home({ params }) {
   }, [token]);
 
   const onSubmit = async (values) => {
-    console.log(values);
     const data = {
-      // narration: `${values.name} pays GHS${localStorage.getItem("amount")}`,
       amount: getValues('amount'),
       customer_id: localStorage.getItem("customer_id"),
       p_key: sessionStorage.getItem("p_key"),
       ...values,
     };
-    console.log(data);
     try {
-      const response = await axios.post("/api/makecollection/", data);
+      const response = await axios.post("/api/makeco  llection/", data);
       console.log(response);
       if (
         response?.data.data

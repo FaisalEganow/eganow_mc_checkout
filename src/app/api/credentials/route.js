@@ -28,6 +28,7 @@ export async function POST(request) {
           "Content-Type": "application/json",
         },
       });
+      console.log(response.data);
       return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     return NextResponse.json(
