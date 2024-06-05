@@ -73,7 +73,7 @@ export default function Home({ params }) {
       ...values,
     };
     try {
-      const response = await axios.post("/api/makeco  llection/", data);
+      const response = await axios.post("/api/makecollection/", data);
       console.log(response);
       if (
         response?.data.data

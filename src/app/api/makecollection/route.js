@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic"; // defaults to auto
 export async function POST(request) {
 
   const data = await request.json();
-  console.log(data);
+  // console.log(data);
   try {
     const response = await axios.post(
       `${URL}/pay`,

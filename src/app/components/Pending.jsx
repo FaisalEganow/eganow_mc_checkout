@@ -1,23 +1,33 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Grid } from "react-loader-spinner";
+import { URL } from "../constants";
 
 function Pending() {
   const [loader, setLoader] = useState(true);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [amount, setAmount] = useState("");
+  
 
   const redirectContainerRef = React.useRef(); //frame contaner
 
-  function removeBackslashes(inputString) {
-    return inputString.replace(/\\/g, '');
-}
+  // FUNCTION TO CHECK TRANSACTION STATUS 
+  async function checkStatus(){
+    const getPKey = sessionStorage.getItem('p_key')
+    try {
+      const getStatus = await axios.get(`${URL}/check-status/${getPKey}`)
+      console.log(getStatus);
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-  
+
   React.useEffect(() => {
+    checkStatus()
     setAmount(localStorage.getItem("amount"));
     setPaymentUrl(localStorage.getItem("3ds").replace(/\\/g, ''));
     if (redirectContainerRef.current) {
-      console.log(paymentUrl);
       // Set the HTML content
       redirectContainerRef.current.innerHTML = paymentUrl;
 
@@ -25,7 +35,7 @@ function Pending() {
       const scriptElement =
         redirectContainerRef.current.querySelector("script");
 
-        console.log(scriptElement);
+        // console.log(scriptElement);
       if (scriptElement) {
         // Create a new script element to execute the script
         const newScript = document.createElement("script");
@@ -35,24 +45,20 @@ function Pending() {
         const divEl = redirectContainerRef.current.querySelector(
           "#threedsChallengeRedirect"
         );
-        console.log(divEl);
+      
         if (divEl) {
           divEl.style.height = "100%";
         }
 
-        // const spinner = document.querySelector("#spinner"); //target spinner
 
         const iFrame =
           redirectContainerRef.current.querySelector("#challengeFrame"); //iframe container
         if (iFrame) {
-          //   spinner.style.display = "block";
-          //   redirectContainerRef.current.style.display = "none";
-          iFrame.style.width = "100%";
+          // iFrame.style.width = "100%";
+          // iFrame.style.height = "100%";
 
           // Add event listener to detect when iframe has finished loading
           iFrame.addEventListener("load", () => {
-            // Check if the iframe is loaded from the 3D gateway
-            // spinner.style.display = "none";
 
             // Show iframe
             redirectContainerRef.current.style.width = "100%";
@@ -68,8 +74,11 @@ function Pending() {
   }, [paymentUrl]);
 
   return (
-    <div className="flex flex-col items-center mt-5">
-      <div className="w-24 h-24 text-center flex justify-center items-center">
+    <div className="flex flex-col items-center mt-5 h-[500px]">
+      {
+        !paymentUrl && 
+      
+      <div className="w-24 h-[80%] text-center flex justify-center items-center">
         <Grid
           visible={true}
           height="40"
@@ -80,6 +89,7 @@ function Pending() {
           wrapperClass="grid-wrapper"
         />
       </div>
+      }
       {!paymentUrl && (
         <div className="text-center pb-2">
           <p className="text-xl font-semibold py-3 text-gray-700">
@@ -92,7 +102,8 @@ function Pending() {
         </div>
       )}
       <div
-        style={{ height: "400px", display: "none" }}
+        // style={{ height: "500px", display: "none" }}
+        className="h-[500px]"
         ref={redirectContainerRef}
       ></div>
     </div>
