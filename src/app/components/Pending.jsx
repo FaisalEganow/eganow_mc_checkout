@@ -15,7 +15,7 @@ function Pending() {
   async function checkStatus() {
     const getPKey = sessionStorage.getItem('p_key')
     try {
-      const response = await axios.post("/api/transactionstatus/", {key:getPKey});
+      const response = await axios.post("/api/transactionstatus", {key:getPKey});
       console.log(response.data);
       // return response.data.data.TransStatus;
     } catch (error) {
