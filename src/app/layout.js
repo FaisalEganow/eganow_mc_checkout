@@ -27,25 +27,19 @@ export default function RootLayout({ children }) {
 
   const params = useParams();
   // console.log(params);
-  const p_key = params.checkout;
+  let p_key = params.checkout;
   // console.log(params);
   // save key to session storage
   // sessionStorage.setItem("p_key", p_key);
 
   const getTokenData = async () => {
     setLoader(true);
+    p_key = sessionStorage.getItem('p_key')
     try {
       const getData = await axios.get(`api/credentials/${p_key}`);
-      // console.log(p_key);
-      console.log(getData.data);
       setLoader(false);
       if (getData.data.customer_id) {
         setAmount(getData.data.amount);
-        // setToken(getData.data.token);
-        // localStorage.setItem("token", getData.data.token);
-        // localStorage.setItem("amount", getData.data.amount);
-        // localStorage.setItem("xauth", getData.data.x_auth);
-        // localStorage.setItem("callBack_url", getData.data.callback_url);
       }
     } catch (error) {
       console.log(error);

@@ -39,7 +39,6 @@ export default function Home({ params }) {
     setLoader(true);
     try {
       const getData = await axios.get(`api/credentials/${p_key}`);
-      console.log(getData.data);
       if (getData.data.customer_id) {
         setLoader(false);
         setToken(getData.data.token);
@@ -74,7 +73,6 @@ export default function Home({ params }) {
     };
     try {
       const response = await axios.post("/api/makecollection/", data);
-      console.log(response);
       if (
         response?.data.data
       ) {

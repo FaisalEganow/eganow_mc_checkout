@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid } from "react-loader-spinner";
 import { URL } from "../constants";
 
@@ -7,26 +7,42 @@ function Pending() {
   const [loader, setLoader] = useState(true);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [amount, setAmount] = useState("");
+  const [transactionStatus, setTransactionStatus] = useState("PENDING");
 
 
   const redirectContainerRef = React.useRef(); //frame contaner
 
-  // FUNCTION TO CHECK TRANSACTION STATUS 
+  // FUNCTION TO GET TRANSACTION STATUS 
   async function checkStatus() {
     const getPKey = sessionStorage.getItem('p_key')
     try {
       const response = await axios.post("/api/transactionstatus", {key:getPKey});
-      console.log(response.data);
-      // return response.data.data.TransStatus;
+      console.log(response.data.data.status);
+      // return response.data.status;
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.error);
       return false;
     }
   }
 
+  // USEEFFECT TO CHECK STATUS EVERY 5 SECONDS
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const status = await checkStatus();
+      // console.log(status);
+      setTransactionStatus(status);
+
+      if (status === "SUCCESSFUL" || status === "FAILED") {
+        clearInterval(interval);
+      }
+    }, 5000); // Check every 5 seconds
+
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, [transactionStatus]);
+
 
   React.useEffect(() => {
-    checkStatus()
     setAmount(localStorage.getItem("amount"));
     setPaymentUrl(localStorage.getItem("3ds").replace(/\\/g, ''));
     if (redirectContainerRef.current) {
