@@ -7,18 +7,20 @@ function Pending() {
   const [loader, setLoader] = useState(true);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [amount, setAmount] = useState("");
-  
+
 
   const redirectContainerRef = React.useRef(); //frame contaner
 
   // FUNCTION TO CHECK TRANSACTION STATUS 
-  async function checkStatus(){
+  async function checkStatus() {
     const getPKey = sessionStorage.getItem('p_key')
     try {
-      const getStatus = await axios.get(`${URL}/check-status/${getPKey}`)
-      console.log(getStatus);
+      const response = await axios.post("/api/transactionstatus/", {key:getPKey});
+      console.log(response.data);
+      // return response.data.data.TransStatus;
     } catch (error) {
-      console.error(error)
+      console.log(error);
+      return false;
     }
   }
 
@@ -35,7 +37,7 @@ function Pending() {
       const scriptElement =
         redirectContainerRef.current.querySelector("script");
 
-        // console.log(scriptElement);
+      // console.log(scriptElement);
       if (scriptElement) {
         // Create a new script element to execute the script
         const newScript = document.createElement("script");
@@ -45,7 +47,7 @@ function Pending() {
         const divEl = redirectContainerRef.current.querySelector(
           "#threedsChallengeRedirect"
         );
-      
+
         if (divEl) {
           divEl.style.height = "100%";
         }
@@ -76,19 +78,19 @@ function Pending() {
   return (
     <div className="flex flex-col items-center mt-5 h-[500px]">
       {
-        !paymentUrl && 
-      
-      <div className="w-24 h-[80%] text-center flex justify-center items-center">
-        <Grid
-          visible={true}
-          height="40"
-          width="40"
-          color="lightgray"
-          ariaLabel="grid-loading"
-          radius="12.5"
-          wrapperClass="grid-wrapper"
-        />
-      </div>
+        !paymentUrl &&
+
+        <div className="w-24 h-[80%] text-center flex justify-center items-center">
+          <Grid
+            visible={true}
+            height="40"
+            width="40"
+            color="lightgray"
+            ariaLabel="grid-loading"
+            radius="12.5"
+            wrapperClass="grid-wrapper"
+          />
+        </div>
       }
       {!paymentUrl && (
         <div className="text-center pb-2">

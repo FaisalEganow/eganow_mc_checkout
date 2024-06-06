@@ -9,27 +9,28 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic"; // defaults to auto
 export async function POST(request) {
   const res = await request.json();
-  console.log(res);
+  console.log(res.key);
   try {
-    const response = await axios.post(
-      `${BASE_URL}/transfer/transstatus`,
-      {
-        LanguageId: "En",
-        TransactionId: res.transactionId,
-      },
+    const response = await axios.get(
+      `${URL}/check-status/${res.key}`,
       {
         headers: {
-          Authorization: `Bearer ${res.token}`,
+          Authorization:
+            "Basic " +
+            btoa(
+              process.env.EGAPAY_CHECKOUT_USERNAME +
+                ":" +
+                process.env.EGAPAY_CHECKOUT_PASSWORD
+            ),
           "Content-Type": "application/json",
-          "X-Auth": res.xAuth,
         },
       }
     );
 
-    // console.log(response.data);
+    console.log(response.data);
     return NextResponse.json({ data: response.data }, { status: 200 });
   } catch (error) {
-    console.error("Error:", error);
+    console.log("Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
