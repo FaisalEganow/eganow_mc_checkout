@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Grid } from "react-loader-spinner";
 import { URL } from "../constants";
+import Success from "./Success";
+import Failed from "./Failed";
 
 function Pending() {
   const [loader, setLoader] = useState(true);
@@ -18,10 +20,10 @@ function Pending() {
     try {
       const response = await axios.post("/api/transactionstatus", {key:getPKey});
       console.log(response.data.data.status);
-      // return response.data.status;
+      return response.data.data.status;
     } catch (error) {
       console.log(error.response.data.error);
-      return false;
+      return 'FAILED';
     }
   }
 
@@ -29,7 +31,7 @@ function Pending() {
   useEffect(() => {
     const interval = setInterval(async () => {
       const status = await checkStatus();
-      // console.log(status);
+      console.log(status);
       setTransactionStatus(status);
 
       if (status === "SUCCESSFUL" || status === "FAILED") {
@@ -39,7 +41,23 @@ function Pending() {
 
     // Clean up interval on component unmount
     return () => clearInterval(interval);
-  }, [transactionStatus]);
+  }, []);
+
+
+  const renderStatusComponent = () => {
+    switch (transactionStatus) {
+      case "SUCCESSFUL":
+        return <Success />;
+      case "FAILED":
+        return <Failed />;
+      default:
+        return <div
+        // style={{ height: "500px", display: "none" }}
+        className="h-[500px]"
+        ref={redirectContainerRef}
+      ></div>;
+    }
+  };
 
 
   React.useEffect(() => {
@@ -119,11 +137,10 @@ function Pending() {
           </small> */}
         </div>
       )}
-      <div
-        // style={{ height: "500px", display: "none" }}
-        className="h-[500px]"
-        ref={redirectContainerRef}
-      ></div>
+
+      
+        {renderStatusComponent()}
+      
     </div>
   );
 }

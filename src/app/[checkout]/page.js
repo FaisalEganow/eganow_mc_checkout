@@ -40,7 +40,7 @@ export default function Home({ params }) {
     defaultValues: defaultFormValues,
   });
   const router = useRouter();
-  console.log(params.checkout);
+
   const p_key = params.checkout;
   // save key to session storage
   sessionStorage.setItem("p_key", p_key);
