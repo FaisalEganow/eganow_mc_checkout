@@ -110,7 +110,7 @@ function Pending() {
   }, [paymentUrl]);
 
   return (
-    <div className="flex flex-col items-center mt-5 h-[500px]">
+    <div className="flex flex-col items-center mt-5 h-[22rem]">
       {
         !paymentUrl &&
 

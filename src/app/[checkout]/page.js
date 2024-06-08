@@ -20,7 +20,7 @@ import logo from "../../../public/Eganowlogo.png";
 import logo2 from "../../../public/Eganowlogo2jpg.jpg";
 export default function Home({ params }) {
   const [token, setToken] = useState(false);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [amount, setAmount] = useState("");
 
   const pathname = usePathname();
@@ -48,7 +48,7 @@ export default function Home({ params }) {
   const nanoid = customAlphabet("0123456789", 12);
 
   const getTokenData = async () => {
-    setLoader(true);
+    // setLoader(true);
     try {
       const getData = await axios.get(`api/credentials/${p_key}`);
       if (getData.data.customer_id) {
@@ -179,7 +179,7 @@ export default function Home({ params }) {
                   id=""
                   type="number"
                   {...register("amount")}
-                  placeholder="20"
+                  placeholder="Enter amount to pay"
                 />
 
                 {formState?.errors?.amount?.message && (
