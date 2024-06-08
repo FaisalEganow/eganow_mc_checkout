@@ -23,23 +23,15 @@ const inter = Inter({ subsets: ["latin"] });
 // };
 
 export default function RootLayout({ children }) {
-
-
-
- 
-
-  
-
- 
   return (
     <html lang="en">
-      <Toaster richColors position="top-center" />
       {/* <p className="text-red-500">hello</p>
       <body className={inter.className}>{children}</body> */}
       <body className="grid place-items-center  ">
+        <Toaster richColors position="top-center" />
         <div className="w-full grid place-items-center ">
           <div className="flex  lg:w-[38%] w-[90%] sm:w-[60%] mt-10 sm:mt-0  rounded-lg drop-shadow-xl bg-white ">
-            <div className="   min-w-[26%] bg-[#CF122B] text-white rounded-s-lg">
+            <div className="hidden sm:block   min-w-[26%] bg-[#CF122B] text-white rounded-s-lg">
               <ul className="  flex flex-col   p-4  ">
                 <li className="font-bold uppercase  hidden sm:block  py-2 my-2 pl-2">
                   pay with{" "}
@@ -48,10 +40,7 @@ export default function RootLayout({ children }) {
                 <LeftNav />
               </ul>
             </div>
-            <div className="  w-full shadow-xl p-5 ">
-              
-              {children}
-            </div>
+            <div className="  w-full shadow-xl p-5 ">{children}</div>
           </div>
           <p className="text-gray-300 pt-5 font-thin inline-flex items-center gap-2">
             <FaLock />

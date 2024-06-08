@@ -43,7 +43,7 @@ export default function Home({ params }) {
 
   const p_key = params.checkout;
   // save key to session storage
-  sessionStorage.setItem("p_key", p_key);
+  // sessionStorage.setItem("p_key", p_key);
 
   const nanoid = customAlphabet("0123456789", 12);
 
@@ -70,7 +70,9 @@ export default function Home({ params }) {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    sessionStorage.setItem("p_key", p_key);
+  }, []);
 
   useEffect(() => {
     getTokenData();
@@ -83,6 +85,8 @@ export default function Home({ params }) {
       p_key: sessionStorage.getItem("p_key"),
       ...values,
     };
+
+    console.log(data);
     try {
       const response = await axios.post("/api/makecollection/", data);
       if (response?.data.data) {
@@ -91,7 +95,7 @@ export default function Home({ params }) {
       }
     } catch (error) {
       console.error(error);
-      toast.error("Error");
+      toast.error(error.response.data.error);
     }
   };
 
