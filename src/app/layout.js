@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
       <Toaster richColors position="top-center" />
       {/* <p className="text-red-500">hello</p>
       <body className={inter.className}>{children}</body> */}
-      <body className="grid place-items-center h-screen bg-[#304767] login-bg ">
+      <body className="grid place-items-center h-screen  ">
         <div className="w-full grid place-items-center ">
           <div className="flex  lg:w-[33%] w-[90%] sm:w-[60%] mt-10 sm:mt-0  rounded-lg drop-shadow-xl bg-white ">
             <div className="  sm:min-w-[25%] w-[20%] bg-[#CF122B] text-white rounded-s-lg">
