@@ -286,7 +286,7 @@ export default function Home({ params }) {
                 />
                 {formState?.errors?.expiryMonth?.message && (
                   <p className="text-sm text-red-500 hidden sm:block">
-                    {formState?.errors?.expiryMonth?.message}hidden sm:block
+                    {formState?.errors?.expiryMonth?.message}
                   </p>
                 )}
               </div>
@@ -340,7 +340,7 @@ export default function Home({ params }) {
             <button
               type="submit"
               disabled={formState.isSubmitting}
-              className="bg-[#1f8fff] w-full flex justify-center items-center  text-white p-2 rounded-lg cursor-pointer active:bg-green-800"
+              className="bg-[#1f8fff] pay-btn w-full "
             >
               {formState.isSubmitting ? (
                 <Rings

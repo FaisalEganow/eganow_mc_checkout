@@ -67,3 +67,39 @@ body {
     opacity: 1;
   }
 }
+
+.pay-btn {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1em ;
+  background-color: #1f8fff;
+  cursor: pointer;
+  color: white;
+  box-shadow: 4px 6px 0px rgb(58, 58, 58);
+  /* border: 4px solid; */
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  z-index: 100;
+  transition: box-shadow 250ms, transform 250ms, filter 50ms;
+}
+.pay-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 3px 0px black;
+}
+.pay-btn:active {
+  filter: saturate(0.75);
+}
+.pay-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: red;
+  z-index: -1;
+  transform: translateX(-100%);
+  transition: transform 250ms;
+}
+.pay-btn:hover::after {
+  transform: translateX(0);
+}
