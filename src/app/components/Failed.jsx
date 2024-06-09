@@ -17,7 +17,7 @@ function Failed() {
         Unfortunately, your payment could not be processed. Please try again or
         use a different payment method.
       </small>
-      <div>
+      {/* <div>
         <Link
           href={{
             pathname: localStorage.getItem("callBack_url"),
@@ -27,7 +27,7 @@ function Failed() {
         >
           Return to Merchant
         </Link>{" "}
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -34,7 +34,7 @@ function Success() {
         Thank you for your purchase. Your order has been placed successfully and
         is being processed.
       </small>
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <Link
           href={{
             pathname: localStorage.getItem("callBack_url"),
@@ -44,7 +44,7 @@ function Success() {
         >
           Return to Merchant
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
