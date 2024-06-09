@@ -38,7 +38,7 @@ function Success() {
         <Link
           href={{
             pathname: localStorage.getItem("callBack_url"),
-            query: { status: "success" },
+            // query: { status: "success" },
           }}
           className="bg-blue-500 my-4 md:px-4 md:py-2 p-2 text-sm md:text-base text-white shadow rounded "
         >
