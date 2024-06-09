@@ -33,8 +33,8 @@ export default function RootLayout({ children }) {
           <div className="flex  lg:w-[38%] w-[90%] sm:w-[60%] mt-10 sm:mt-0  rounded-lg drop-shadow-xl bg-white ">
             <div className="hidden sm:block   min-w-[22%] bg-[#CF122B] text-white rounded-s-lg">
               <ul className="  flex flex-col   p-4  ">
-                <li className="font-bold uppercase  hidden sm:block  py-2 my-2 pl-2">
-                  pay with{" "}
+                <li className="font-bold   hidden sm:block  py-2 my-2 pl-2">
+                  Pay with{" "}
                 </li>
                 {/* <hr className="border-gray-300" /> */}
                 <LeftNav />
