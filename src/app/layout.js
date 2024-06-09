@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
         <Toaster richColors position="top-center" />
         <div className="w-full grid place-items-center ">
           {/*session*/}
-          <div className="flex   mt-10 sm:mt-0  rounded-lg drop-shadow-xl bg-white ">
+          <div className="flex   mt-10 sm:mt-0  rounded-lg drop-shadow-xl bg-white w-[95%] sm:w-[500px]">
             <div className="hidden    min-w-[22%] bg-[#CF122B] text-white rounded-s-lg">
               <ul className="  flex flex-col   p-4  ">
                 <li className="font-bold   hidden sm:block  py-2 my-2 pl-2">

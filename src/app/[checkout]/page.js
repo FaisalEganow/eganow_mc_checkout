@@ -104,12 +104,17 @@ export default function Home({ params }) {
   }, [watch("amount")]);
 
   return (
-    <div>
+    <div className="">
       {loader ? (
         <SkeletonLoader />
       ) : (
         <div>
-          <div className="flex  justify-between items-center">
+         
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full max-w-lg mt-1 pb-5 "
+          >
+             <div className="flex  justify-between items-center pb-4">
             <Image
               src={logo}
               className="hidden sm:block"
@@ -151,10 +156,6 @@ export default function Home({ params }) {
               </div>
             )}
           </div>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="w-full max-w-lg mt-5 pb-5 "
-          >
             <h1 className="text-center font-semibold text-md mb-3 text-gray-500">
               Enter your card details to pay
             </h1>
