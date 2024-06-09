@@ -95,7 +95,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: red;
+  background-color: #cc042bed;
   z-index: -1;
   transform: translateX(-100%);
   transition: transform 250ms;
