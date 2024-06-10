@@ -5,6 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 function Failed() {
+  const handleDoneClick = () => {
+    // Notify the parent window that payment was successful
+    window.parent.postMessage("failed", "*");
+  };
   return (
     <div className="flex flex-col items-center mt-5 py-5">
       <div className="w-24 h-24 text-center flex justify-center items-center">
@@ -17,17 +21,18 @@ function Failed() {
         Unfortunately, your payment could not be processed. Please try again or
         use a different payment method.
       </small>
-      {/* <div>
-        <Link
-          href={{
-            pathname: localStorage.getItem("callBack_url"),
-            // query: { status: "failed" },
-          }}
-          className="bg-blue-500 my-4 md:px-4 md:py-2 p-2 text-sm md:text-base text-white shadow rounded "
+      <div>
+        <button
+          onClick={() => handleDoneClick}
+          // href={{
+          //   pathname: localStorage.getItem("callBack_url"),
+          //   // query: { status: "failed" },
+          // }}
+          className="bg-blue-500 my-4 md:px-4 md:py-2 p-2 text-sm md:text-base text-white shadow rounded hover:bg-red-500 active:bg-red-700"
         >
           Return to Merchant
-        </Link>{" "}
-      </div> */}
+        </button>{" "}
+      </div>
     </div>
   );
 }

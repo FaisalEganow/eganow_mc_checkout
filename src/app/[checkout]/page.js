@@ -22,6 +22,7 @@ export default function Home({ params }) {
   const [token, setToken] = useState(false);
   const [loader, setLoader] = useState(true);
   const [amount, setAmount] = useState("");
+  const [currency, setCurrency] = useState("");
 
   const pathname = usePathname();
 
@@ -51,11 +52,14 @@ export default function Home({ params }) {
     // setLoader(true);
     try {
       const getData = await axios.get(`api/credentials/${p_key}`);
+      // console.log(getData.data);
       if (getData.data.customer_id) {
         setLoader(false);
         setToken(getData.data.token);
         setValue("amount", getData.data.amount);
+        setValue("currency", getData.data.currency);
         setAmount(getData.data.amount);
+        setCurrency(getData.data.currency);
         localStorage.setItem("customer_id", getData.data.customer_id);
         localStorage.setItem("amount", getData.data.amount);
         localStorage.setItem("ip_address", getData.data.ip_address);
@@ -86,7 +90,6 @@ export default function Home({ params }) {
       ...values,
     };
 
-    console.log(data);
     try {
       const response = await axios.post("/api/makecollection/", data);
       if (response?.data.data) {
@@ -109,53 +112,52 @@ export default function Home({ params }) {
         <SkeletonLoader />
       ) : (
         <div>
-         
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="w-full max-w-lg mt-1 pb-5 "
           >
-             <div className="flex  justify-between items-center pb-4">
-            <Image
-              src={logo}
-              className="hidden sm:block"
-              width={100}
-              alt="logo 1"
-            />
-            <Image
-              src={logo2}
-              className="block sm:hidden"
-              width={30}
-              alt="logo 2"
-            />
-            {pathname !== "/processing" && (
-              <div className="text-sm sm:text-base text-gray-600">
-                {loader ? (
-                  <ColorRing
-                    visible={true}
-                    height="40"
-                    width="40"
-                    ariaLabel="color-ring-loading"
-                    wrapperStyle={{}}
-                    wrapperClass="color-ring-wrapper"
-                    colors={[
-                      "#e15b64",
-                      "#f47e60",
-                      "#f8b26a",
-                      "#abbd81",
-                      "#849b87",
-                    ]}
-                  />
-                ) : (
-                  <p className="">
-                    Pay{" "}
-                    <span className="text-blue-500 font-medium">
-                      GHS {new Intl.NumberFormat().format(amount)}
-                    </span>
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
+            <div className="flex  justify-between items-center pb-4">
+              <Image
+                src={logo}
+                className="hidden sm:block"
+                width={100}
+                alt="logo 1"
+              />
+              <Image
+                src={logo2}
+                className="block sm:hidden"
+                width={30}
+                alt="logo 2"
+              />
+              {pathname !== "/processing" && (
+                <div className="text-sm sm:text-base text-gray-600">
+                  {loader ? (
+                    <ColorRing
+                      visible={true}
+                      height="40"
+                      width="40"
+                      ariaLabel="color-ring-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="color-ring-wrapper"
+                      colors={[
+                        "#e15b64",
+                        "#f47e60",
+                        "#f8b26a",
+                        "#abbd81",
+                        "#849b87",
+                      ]}
+                    />
+                  ) : (
+                    <p className="">
+                      Pay{" "}
+                      <span className="text-blue-500 font-medium">
+                        {currency === 'USD' ? "$" : "₵"}{new Intl.NumberFormat().format(amount)}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
             <h1 className="text-center font-semibold text-md mb-3 text-gray-500">
               Enter your card details to pay
             </h1>

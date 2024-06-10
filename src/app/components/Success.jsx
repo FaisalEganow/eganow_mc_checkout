@@ -22,6 +22,11 @@ function Success() {
     localStorage.removeItem("transactionId");
   }, []);
 
+  const handleDoneClick = () => {
+    // Notify the parent window that payment was successful
+    window.parent.postMessage('successful', '*');
+  };
+
   return (
     <div className="flex flex-col items-center mt-5">
       <div className="w-auto h-24 text-center flex justify-center items-center">
@@ -34,17 +39,18 @@ function Success() {
         Thank you for your purchase. Your order has been placed successfully and
         is being processed.
       </small>
-      {/* <div className="mb-3">
-        <Link
-          href={{
-            pathname: localStorage.getItem("callBack_url"),
-            // query: { status: "success" },
-          }}
-          className="bg-blue-500 my-4 md:px-4 md:py-2 p-2 text-sm md:text-base text-white shadow rounded "
+      <div className="mb-3">
+        <button
+        onClick={handleDoneClick}
+          // href={{
+          //   pathname: localStorage.getItem("callBack_url"),
+          //   // query: { status: "success" },
+          // }}
+          className="bg-blue-500 my-4 md:px-4 md:py-2 p-2 text-sm md:text-base text-white shadow rounded hover:bg-red-500 active:bg-red-700"
         >
           Return to Merchant
-        </Link>
-      </div> */}
+        </button>
+      </div>
     </div>
   );
 }

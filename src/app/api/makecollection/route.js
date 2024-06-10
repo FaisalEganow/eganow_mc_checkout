@@ -10,19 +10,19 @@ import { response } from "../credentials/route";
 export const dynamic = "force-dynamic"; // defaults to auto
 
 export async function POST(request) {
-
   const data = await request.json();
   console.log(data);
-  console.log(parseInt(data.amount))
+  console.log(parseInt(data.amount));
   try {
     const response = await axios.post(
       `${URL}/pay`,
       {
         customer_id: data?.customer_id,
         amount: parseInt(data?.amount),
+        currency: data?.currency,
         public_key: data?.p_key,
         card_holder_name: data?.accountName || data.name,
-        card_number: data.accountNoOrCardNoOrMSISDN, 
+        card_number: data.accountNoOrCardNoOrMSISDN,
         card_expiry_month: data?.expiryMonth || 0,
         card_expiry_year: data?.expiryYear || 0,
         card_cvv: data?.cvv || 0,
@@ -46,10 +46,11 @@ export async function POST(request) {
   } catch (error) {
     // console.error(error.response.data.message);
     // return NextResponse.json({ error: error }, { status: 500 });
-    let errorMessage = 'An unexpected error occurred';
-    
+    let errorMessage = "An unexpected error occurred";
+
     if (error.response && error.response.data) {
-      errorMessage = error.response.data.message || JSON.stringify(error.response.data);
+      errorMessage =
+        error.response.data.message || JSON.stringify(error.response.data);
     } else if (error.message) {
       errorMessage = error.message;
     }
@@ -58,6 +59,3 @@ export async function POST(request) {
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
-
-
-

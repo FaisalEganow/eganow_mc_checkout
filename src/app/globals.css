@@ -76,7 +76,7 @@ body {
   background-color: #2a88f4;
   cursor: pointer;
   color: white;
-  box-shadow: 4px 6px 0px rgb(58, 58, 58);
+  /* box-shadow: 4px 6px 0px rgb(58, 58, 58); */
   /* border: 4px solid; */
   border-radius: 15px;
   position: relative;
@@ -86,7 +86,7 @@ body {
 }
 .pay-btn:hover {
   transform: translate(2px, 2px);
-  box-shadow: 2px 3px 0px black;
+  /* box-shadow: 2px 3px 0px black; */
 }
 .pay-btn:active {
   filter: saturate(0.75);
