@@ -22,7 +22,7 @@ export async function GET(request) {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     // console.error("Error:", error.response ? error.response.data : error.message);
